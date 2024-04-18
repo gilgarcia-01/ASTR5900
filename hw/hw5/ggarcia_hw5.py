@@ -7,6 +7,8 @@ HW5 - Neural Networks
 
 #import required libraries
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import ticker, cm 
 
 ####
 #Q1#
@@ -40,7 +42,25 @@ def neural_network(activation_fxn,x1,x2):
 
 
 point1 = neural_network(np.tanh,0,0)
-print(point1)
+point2 = neural_network(np.tanh,7.5,2.5)
+point3 = neural_network(np.tanh,-5,-2)
+
+
+    #c#
+N = 100
+value_matrix = np.zeros((N,N))
+x,y = np.linspace(-10,10,N),np.linspace(-10,10,N)
+
+for i in range(value_matrix.shape[0]):
+    for j in range(value_matrix.shape[1]):
+        value_matrix[i,j] = neural_network(np.tanh,x[i],y[j])
+
+#X,Y = np.meshgrid(x,y)
+
+
+cs = plt.contourf(x,y,value_matrix, levels=N)
+cbar = plt.colorbar(cs) 
+plt.show() 
 
 
 
