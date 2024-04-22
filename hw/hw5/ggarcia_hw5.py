@@ -44,6 +44,7 @@ def neural_network(activation_fxn,x1,x2):
 point1 = neural_network(np.tanh,0,0)
 point2 = neural_network(np.tanh,7.5,2.5)
 point3 = neural_network(np.tanh,-5,-2)
+print(point1,point2,point3)
 
 
     #c#
