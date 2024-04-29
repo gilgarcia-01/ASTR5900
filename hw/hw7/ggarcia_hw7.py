@@ -36,7 +36,6 @@ def wave_equation(nx, nt, c):
 
     # Calculate Courant Number
     C = c * dt / dx
-    #C = 10e-10
     print(f"C = {C} (Courant Number)")
 
     # Define numerical solver step functions
@@ -76,7 +75,7 @@ def wave_equation(nx, nt, c):
 
     def triangle(x,t=0):
         if -1.0 + c * t <= x <= 1.0 + c * t:
-            return 1.0 - abs(x)
+            return 1.0 - abs(x - c*t)
         else:
             return 0
 
@@ -113,5 +112,5 @@ def wave_equation(nx, nt, c):
     plt.legend()
     plt.show()
 
-wave_equation(nx = 80, nt = 80, c = 2)
-wave_equation(nx = 80, nt = 50, c = 2)
+wave_equation(nx = 80, nt = 100, c = 2)
+wave_equation(nx = 100, nt = 100, c = 0.5)
