@@ -12,7 +12,7 @@ plt.rcParams['figure.figsize'] = [12, 4]
 
 
 #we update the code to match the conditions required for the hw
-def wave_equation(nx, nt, c):
+def wave_equation(nx, nt, c,plot=True):
     # Set spatial parameters
     xmin = -3.0
     xmax = 3.0
@@ -102,15 +102,50 @@ def wave_equation(nx, nt, c):
         lax_periodic_step(u_lax)
         lax_wendroff_periodic_step(u_lax_wendroff)
 
-    # Plot analytical and numerical solutions
-    plt.plot(x_points, u0, 'b:', label="Initial conditions")
-    plt.plot(x_points, uf, 'b-', label="Analytical solution")
-    plt.plot(x_points, u_upstream, 'r-', label="Upstream (1st order)")
-    plt.plot(x_points, u_lax, 'g-', label="Lax (1st order)")
-    plt.plot(x_points, u_lax_wendroff, 'c-', label="Lax-Wendroff (2nd order)")
-    plt.ylim(-0.2, 1.2)
-    plt.legend()
-    plt.show()
+    if plot == True:
+        # Plot analytical and numerical solutions
+        plt.plot(x_points, u0, 'b:', label="Initial conditions")
+        plt.plot(x_points, uf, 'b-', label="Analytical solution")
+        plt.plot(x_points, u_upstream, 'r-', label="Upstream (1st order)")
+        plt.plot(x_points, u_lax, 'g-', label="Lax (1st order)")
+        plt.plot(x_points, u_lax_wendroff, 'c-', label="Lax-Wendroff (2nd order)")
+        plt.ylim(-0.2, 1.2)
+        plt.legend()
+        plt.show()
+    
+    #calculate relative error:
+    abs_err = (u_upstream - uf)
+    #return x points, analytical, and 1st order upstream numerical soln
+    return x_points,abs_err,C
 
+#1a - centering the propogation waves
 wave_equation(nx = 80, nt = 100, c = 2)
-wave_equation(nx = 100, nt = 100, c = 0.5)
+#1b - we play around with nx and nt to find where Cmax is not stable
+wave_equation(nx = 100, nt = 100, c = 2)
+#we find that c_max of 1 is the upper limit for stability.
+
+#1c - c_max for less than, equal to and greater than Cmax
+#less than
+wave_equation(nx = 50, nt = 100, c = 2)
+#equal to 
+wave_equation(nx = 100, nt = 100, c = 2)
+#greater than
+wave_equation(nx = 150, nt = 100, c = 2)
+
+#2a
+print()
+print('2a')
+xpts1,abserr1,C1 = wave_equation(nx = 100, nt = 110, c = 2,plot=False)
+xpts2,abserr2,C2 = wave_equation(nx = 100, nt = 120, c = 2,plot=False)
+xpts3,abserr3,C3 = wave_equation(nx = 100, nt = 130, c = 2,plot=False)
+xpts4,abserr4,C4 = wave_equation(nx = 100, nt = 100, c = 2,plot=False)
+print(xpts1)
+plt.plot(xpts1,abserr1,label='C={0:.2f}'.format(C1))
+plt.plot(xpts2,abserr2,label='C={0:.2f}'.format(C2))
+plt.plot(xpts3,abserr3,label='C={0:.2f}'.format(C3))
+plt.plot(xpts4,abserr4,label='C={0:.2f}'.format(C4))
+plt.legend(loc='lower right')
+plt.show()
+
+#no, reducing delta t while keeping delta x constant does not improve accuracy.
+# bigger nt means smaller delta t but also bigger error so less accuracy.
