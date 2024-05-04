@@ -84,7 +84,7 @@ def wave_equation(nx, nt, c,plot=True):
 
     def periodic_triangle(x,t):
         x_wrapped = x
-        while  x_wrapped < xmin + c * t: ############ FIX MEEEEEEEE :( #######
+        while  x_wrapped < xmin + c * t:
             x_wrapped += (xmax - xmin)
         while x_wrapped > xmax + c * t:
             x_wrapped -= (xmax - xmin)
